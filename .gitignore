@@ -1,0 +1,25 @@
+# Ambiente virtual Python
+venv/
+.env/
+
+# Bytecode / cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Arquivos de sistema
+.DS_Store
+Thumbs.db
+
+# Configurações de IDE
+.vscode/
+.idea/
+
+# Logs
+*.log
+
+# Arquivos sensíveis (se houver)
+*.sqlite3
+*.db
+.env.local
