@@ -126,8 +126,8 @@ EMAIL_HOST = "smtp.gmail.com"
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 
-EMAIL_HOST_USER = "renato.lancelot@gmail.com"
-EMAIL_HOST_PASSWORD = "qfotlxhanqnnufkx"
+EMAIL_HOST_USER = "..." # Substitua pelo seu email
+EMAIL_HOST_PASSWORD = "..." # Substitua pela senha do email host
 
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
