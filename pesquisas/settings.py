@@ -129,6 +129,10 @@ EMAIL_USE_TLS = True
 EMAIL_HOST_USER = "..." # Substitua pelo seu email
 EMAIL_HOST_PASSWORD = "..." # Substitua pela senha do email host
 
+IMAP_SERVER = "imap.gmail.com"
+IMAP_EMAIL = "avaliacao@speedvote.com"
+IMAP_PASSWORD = "SUA_SENHA_OU_APP_PASSWORD"
+
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
 SITE_URL = "http://127.0.0.1:8000"

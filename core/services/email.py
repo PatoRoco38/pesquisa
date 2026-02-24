@@ -1,12 +1,13 @@
 from django.conf import settings
-from django.urls import reverse
 from django.core.mail import EmailMultiAlternatives
+from urllib.parse import quote
 
 def send_survey_email(recipient):
     survey = recipient.survey
     questions = survey.questions.order_by("order")
 
-    base_url = settings.SITE_URL
+    token = recipient.token
+    reply_email = f"avaliacao+{token}@speedvote.com"
 
     html_body = "<html><body>"
     html_body += "<p>Olá! Por favor, avalie os itens abaixo (0 a 10):</p>"
@@ -15,9 +16,19 @@ def send_survey_email(recipient):
         html_body += f"<p><strong>{q.text}</strong><br>"
 
         for r in range(0, 11):
-            link = f"{base_url}{reverse('survey_respond', args=[recipient.token, q.id, r])}"
+            subject = quote(f"Avaliação — {survey.title}")
+
+            body = quote(
+                f"Pesquisa: {survey.title}\n"
+                f"Pergunta ID: {q.id}\n"
+                f"Nota: {r}\n"
+                f"Comentario:\n"
+            )
+
+            mailto_link = f"mailto:{reply_email}?subject={subject}&body={body}"
+
             html_body += (
-                f'<a href="{link}" '
+                f'<a href="{mailto_link}" '
                 f'style="margin:2px; padding:6px 8px; '
                 f'border:1px solid #ccc; border-radius:4px; '
                 f'text-decoration:none; color:#000;">{r}</a>'
@@ -26,12 +37,15 @@ def send_survey_email(recipient):
         html_body += "</p><br>"
 
     html_body += (
-        "<p>Se quiser deixar um comentário, "
-        "basta responder este e-mail.</p>"
+        "<p>Após escolher a nota, escreva um comentário (opcional) "
+        "e envie a resposta.</p>"
     )
     html_body += "</body></html>"
 
-    text_body = "Olá! Avalie os itens abaixo respondendo este e-mail.\n"
+    text_body = (
+        "Olá! Avalie os itens clicando na nota desejada "
+        "e respondendo este e-mail.\n"
+    )
 
     msg = EmailMultiAlternatives(
         subject=f"Avaliação — {survey.title}",
